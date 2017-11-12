@@ -1,0 +1,80 @@
+For the first part of the homework, my synprobe program takes the desired address you wish to scan and, for each port provided (or the defaults if no input is provided), sends a SYN packet. If it recieves a SYN/ACK, it will store the responding (ip, port) tuple in a list of open ports (it is necessary to store the ip when scanning subnets). Once the scan is complete, the program will iterate through the list of open ports, opening a socket and attempting to read 1024 bytes from the socket. If the socket read timesout, an HTTP request will be sent to the socket, and will then reattempt to read 1024 bytes from the socket.
+
+The followinging is the redirected output of my synprobe.py scanning the default ports of the Metasploitable vm we used earlier in the semetser:
+
+----------------------------------------------------------------------
+From 192.168.134.128:22:
+SSH-2.0-OpenSSH_4.7p1 Debian-8ubuntu1
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+From 192.168.134.128:25:
+220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+From 192.168.134.128:53:
+NO DATA RECIEVED
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+From 192.168.134.128:80:
+HTTP/1.1 200 OK
+Date: Wed, 11 Oct 2017 06:13:54 GMT
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Content-Length: 891
+Content-Type: text/html
+
+<html><head><title>Metasploitable2 - Linux</title></head><body>
+<pre>
+
+                _                  _       _ _        _     _      ____  
+ _ __ ___   ___| |_ __ _ ___ _ __ | | ___ (_) |_ __ _| |__ | | ___|___ \ 
+| '_ ` _ \ / _ \ __/ _` / __| '_ \| |/ _ \| | __/ _` | '_ \| |/ _ \ __) |
+| | | | | |  __/ || (_| \__ \ |_) | | (_) | | || (_| | |_) | |  __// __/ 
+|_| |_| |_|\___|\__\__,_|___/ .__/|_|\___/|_|\__\__,_|_.__/|_|\___|_____|
+                            |_|                                          
+
+
+Warning: Never expose this VM to an untrusted network!
+
+Contact: msfdev[at]metasploit.com
+
+Login with msfadmin/msfadmin to get started
+
+
+</pre>
+<ul>
+<li><a href="/twiki/">TWiki</a></li>
+<li><a href="/phpMyAdmin/">phpMyAdmin</a></li>
+<li><a href="/mutillidae/">Mutillidae</a></li>
+<li><a href="/dvwa/">DVWA</a></li>
+<li><a href="/da
+----------------------------------------------------------------------
+
+
+
+For the second part of the assignment, on startup, my arpwatch program uses subprocess to call arp -a and parses the output to initialize the program's arp cache. Once that task is completed, the program will continuously sniff arp packets. When it recieves an arp reply, it checks that the ip address of the reply is in the list. If it is, the program compares the mac address of the arp reply against the mac address the program has associated to that ip. If the mac addresses don't match, the program prints "(ip) changed from       (origninal mac) to (arp reply mac)".
+
+The following is output redirected from arpwatch.py to this file during a short arpspoof attack:
+
+
+172.16.95.1 changed from 00:50:56:c0:00:08 to 00:0c:29:85:2b:ed
+172.16.95.1 changed from 00:50:56:c0:00:08 to 00:0c:29:85:2b:ed
+172.16.95.1 changed from 00:50:56:c0:00:08 to 00:0c:29:85:2b:ed
+172.16.95.1 changed from 00:50:56:c0:00:08 to 00:0c:29:85:2b:ed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
